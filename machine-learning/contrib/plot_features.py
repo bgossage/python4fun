@@ -6,6 +6,8 @@ This is a temporary script file.
 """
 
 import sys
+import matplotlib
+
 
 #
 # Setup path to modules...
@@ -13,8 +15,6 @@ import sys
 sys.path.append( "../modules" )
 
 import featureIO
-
-import matplotlib.pyplot
 
 
 #
@@ -46,8 +46,12 @@ try:
 
     x1 = X[:,feature1]
     x2 = X[:,feature2]
+    colors =  Y.astype(int) * 50 + 1
 
-    print( x1 )
+    print( colors )
+
+    matplotlib.pyplot.scatter( x1, x2, colors );
+    matplotlib.pyplot.show()
 
 except Exception as err:
    print( "An error occured: ", err )
