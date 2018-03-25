@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+A module for reading machine learning feature data inputs
 
-This is a temporary script file.
 """
 
 import sys
@@ -25,21 +24,19 @@ try:
 # Define default inputs...
 #
     featuresFile = "../data/all_substrings.csv"
-    featureName_1 = "ACACACACACACACACACACACACACACACACACACACACACACAC"
-    featureName_2 = "GCCACCATGG"
+    feature1 = 5
+    feature2 = 7
 
 # Check for command-line arguments...
     if( len(sys.argv) == 4 ):
        featuresFile = sys.argv[1]
-       featureName_1 = sys.argv[2]
-       featureName_1 = sys.argv[3]
+       feature1 = int(sys.argv[2])
+       feature2 = int(sys.argv[3])
 
 # Read features file...
     header_labels, X, Y = featureIO.read_features( featuresFile )
 
 # Get the desired columns...
-    feature1 = header_labels.index(featureName_1)-1
-    feature2 = header_labels.index(featureName_2)-1
     num_features = len( header_labels ) - 2
 
     print( "Index 1 = ", feature1, "  Index 2 = ", feature2, "\n" )
