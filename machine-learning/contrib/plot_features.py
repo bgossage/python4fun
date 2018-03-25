@@ -7,7 +7,7 @@ This is a temporary script file.
 
 import sys
 import matplotlib
-
+import matplotlib.pyplot
 
 #
 # Setup path to modules...
@@ -25,8 +25,8 @@ try:
 # Define default inputs...
 #
     featuresFile = "../data/all_substrings.csv"
-    featureName_1 = "GCCACCATGG"
-    featureName_2 = "TATATAA"
+    featureName_1 = "ACACACACACACACACACACACACACACACACACACACACACACAC"
+    featureName_2 = "GCCACCATGG"
 
 # Check for command-line arguments...
     if( len(sys.argv) == 4 ):
@@ -48,9 +48,21 @@ try:
     x2 = X[:,feature2]
     colors =  Y.astype(int) * 50 + 1
 
-    print( colors )
+    bx1 = x1[ Y==0 ]
+    bx2 = x2[ Y==0 ]
 
-    matplotlib.pyplot.scatter( x1, x2, colors );
+    hx1 = x1[ Y==1 ]
+    hx2 = x2[ Y==1 ]
+
+    scale = 2
+
+    matplotlib.pyplot.scatter( bx1, bx2, s = 2, c='r',
+                               marker='+'
+                             );
+    matplotlib.pyplot.scatter( hx1, hx2, s=64,
+                               c = 'b',
+                               marker='o'
+                             );
     matplotlib.pyplot.show()
 
 except Exception as err:
