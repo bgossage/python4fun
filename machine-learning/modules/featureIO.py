@@ -13,16 +13,16 @@ import numpy
 #
 sys.path.append( "../modules" )
 
-
-
 #
 # Define a function to test for a valid float string
 def is_float( s ):
-   is_float = True
+   ans = True
    try:
        float(s)
    except( ValueError, TypeError ):
-      is_float = False
+      ans = False
+
+   return ans
 
 # end is_float() ~~~~~~~~~~~~~~~~~~~~~~~~
 
