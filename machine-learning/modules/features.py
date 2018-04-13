@@ -40,7 +40,7 @@ class  Feature:
 #end class Feature
 
 ##
-# A common base class for features
+# A common base class for features computed by counting sub-strings
 #
 class  SubstringFeature( Feature ):
 
@@ -55,7 +55,7 @@ class  SubstringFeature( Feature ):
 
       self.tag = str()
 
-   # end constructor ~~~~~~~~~~~~~~~~~~~~~~~~
+   # end  SubstringFeature constructor ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 ##
@@ -96,12 +96,10 @@ class  PribnowBox( SubstringFeature ):
    # Overwrite the base class member variables
 
       self.description = "TATAAT promoter region for transcription in bacteria"
-
       self.name = "Pribnow Box"
-
       self.tag = "TATAATA"
 
-   # end constructor ~~~~~~~~~~~~~~~~~~~~~~~~
+   # end PribnowBox init ~~~~~~~~~~~~~~~~~~~~~~~~
 
 #end class PribnowBox
 
@@ -115,6 +113,7 @@ class MeltingTemperature( Feature ):  # Derive as a sub-class of class 'Feature'
 
        self.name = "MeltingTemperature"
 
+   # Override base class Feature compute()
    def compute( self, sequence ):
 
       seq = Seq( sequence )
