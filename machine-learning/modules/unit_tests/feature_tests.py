@@ -17,6 +17,7 @@ sys.path.append( ".." )
 import unittest
 import features
 
+from Bio import SeqIO
 
 class Feature_tests( unittest.TestCase ):
 
@@ -31,13 +32,26 @@ class Feature_tests( unittest.TestCase ):
 
        feature.compute( seq_str )
 
-       print( feature.name, "= ", feature.value )
+       self.assertEqual( feature.value, 1 )
 
        feature = features.MeltingTemperature()
 
        feature.compute( seq_str )
 
-       print( feature.name, " = ", feature.value )
+       self.assertEqual( feature.value, 8.0 )
+
+       feature_set = { features.PribnowBox(),
+                       features.MeltingTemperature()
+                     }
+
+       for feature in feature_set:
+
+          feature.compute( seq_str )
+
+          print( feature.name, " = ", feature.value )
+
+
+       #end for
 
 # end class Feature_tests
 
