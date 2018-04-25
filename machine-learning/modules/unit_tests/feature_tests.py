@@ -38,7 +38,7 @@ class Feature_tests( unittest.TestCase ):
 
        feature.compute( seq_str )
 
-       self.assertEqual( feature.value, 8.0 )
+       self.assertFloatEqual( feature.value, 8.0, 0.001 )
 
        feature_set = { features.PribnowBox(),
                        features.MeltingTemperature()
