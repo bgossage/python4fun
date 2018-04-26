@@ -8,6 +8,7 @@ import sys
 import matplotlib
 import matplotlib.pyplot
 import sklearn.svm
+import numpy
 #
 # Setup path to modules...
 #
@@ -33,6 +34,21 @@ try:
 
 # Read features file...
     header_labels, X, Y = featureIO.read_features( featuresFile )
+
+    m, n = X.shape
+
+# Randomize the rows of X and Y...
+    random_indices = numpy.random.permutation( m )
+
+    Xrand = X[ random_indices ]
+    Yrand = Y[ random_indices ]
+
+# Divide the examples into training, validation, and test sets...
+    sections = numpy.trunc([m*0.6, m*0.8, m]).astype(int)
+
+    Xtrain, Xval, Xtest, end = numpy.split( Xrand, sections )
+    Ytrain, Yval, Ytest, end = numpy.split( Yrand, sections )
+
 
 # Get the desired columns...
     num_features = len( header_labels ) - 2
