@@ -60,10 +60,19 @@ try:
 # NOTE: creates own subsets
     Cvals = numpy.linspace(1.0,5.0, 10)
 
-    train_scores, valid_scores = validation_curve( sklearn.svm.SVC(),
+    c_train_scores, c_valid_scores = validation_curve( sklearn.svm.SVC(),
                                                    X, Y,
                                                    "C", Cvals
                                                   )
+    gammaVals = numpy.linspace(0.1,5.0, 10)
+
+    gamma_train_scores, gamma_valid_scores = validation_curve( sklearn.svm.SVC(),
+                                                                X, Y,
+                                                               param_name="gamma",
+                                                               param_range=gammaVals
+                                                             )
+
+
 # TODO: Repeat for gamma and plot the scores vs (C, gamma).
 
 
