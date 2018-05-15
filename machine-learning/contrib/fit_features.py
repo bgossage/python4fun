@@ -56,7 +56,7 @@ try:
     model = sklearn.svm.SVC( C=1.0, gamma=1.0 )
     model.fit( X, Y )
 
-    Xin = X[2,:].reshape(1,-1)
+    Xin = X[m-1,:].reshape(1,-1)
 
     Yp = model.predict( Xin )
 
