@@ -8,6 +8,8 @@ import sys
 import matplotlib
 import matplotlib.pyplot
 import sklearn.svm
+from sklearn.model_selection import validation_curve
+from sklearn.metrics import precision_recall_fscore_support
 import numpy
 #
 # Setup path to modules...
@@ -49,18 +51,54 @@ try:
     Xtrain, Xval, Xtest, end = numpy.split( Xrand, sections )
     Ytrain, Yval, Ytest, end = numpy.split( Yrand, sections )
 
-
-# Get the desired columns...
-    num_features = len( header_labels ) - 2
-
+# Train on the training set...
     model = sklearn.svm.SVC( C=1.0, gamma=1.0 )
-    model.fit( X, Y )
+    model.fit( Xtrain, Ytrain )
 
+# Compute metrics for the training and validation sets for different
+# values of the regularization parameter 'C"...
+# NOTE: creates own subsets
+    Cvals = numpy.linspace(1.0,5.0, 10)
+
+    c_train_scores, c_valid_scores = validation_curve( sklearn.svm.SVC(),
+                                                   X, Y,
+                                                   "C", Cvals
+                                                  )
+    gammaVals = numpy.linspace(0.1,5.0, 10)
+
+    gamma_train_scores, gamma_valid_scores = validation_curve( sklearn.svm.SVC(),
+                                                                X, Y,
+                                                               param_name="gamma",
+                                                               param_range=gammaVals
+                                                             )
+
+
+# TODO: Repeat for gamma and plot the scores vs (C, gamma).
+
+
+# Predict the test set...
+    Yp = model.predict( Xtest )
+
+# Compute test metrics...
+    precision, recall, fscore, support = precision_recall_fscore_support( Ytest, Yp )
+
+<<<<<<< HEAD
     Xin = X[m-1,:].reshape(1,-1)
+=======
+## precision = TP / (TP + FP)
+## recall = TP / (TP + FN)
+## fscore = 2 * (precision * recall) / (precision + recall)
+>>>>>>> a40bc0bd1a82257254ea22d4a5168a2576df8fb8
 
-    Yp = model.predict( Xin )
+    print('bacterial precision: {}'.format(precision[0]))
+    print('bacterial recall:    {}'.format(recall[0]))
+    print('bacterial fscore:    {}'.format(fscore[0]))
+    print('bacterial support:   {}'.format(support[0]))
 
-    Yp
+    print('human     precision: {}'.format(precision[1]))
+    print('human     recall:    {}'.format(recall[1]))
+    print('human     fscore:    {}'.format(fscore[1]))
+    print('human     support:   {}'.format(support[1]))
 
  #   matplotlib.pyplot.legend(loc='upper right')
  #   matplotlib.pyplot.show()
