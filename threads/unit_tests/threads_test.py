@@ -19,22 +19,6 @@ import Work
 
 
 ##
-## A chunk of work (partial sum) to compute Pi
-##
-class PiWork( Work ) :
-
-
-    def __init__ ( self, chunks=1 ) :
-
-       Work.__init__( self )  # NOTE:Calls the base-class constructor
-
-       partial_sum = 0.0  ## the partial sum
-
-       thread_id = 0      ## the id of the thread that computed it
-
-## end class PiWork
-
-##
 ## A function object to compute a partial sum
 ##
 
@@ -42,10 +26,10 @@ class PiWork( Work ) :
 
 class MeanWork( Work ):
 
-      def __init__( chunks=1 ) :
-         Work.__init__(chunks)
-         partial_sum = 0.0
-         thread_id = 0
+      def __init__( self, chunks=1 ) :
+         super().__init__(chunks)
+         m_partial_sum = 0.0
+         m_thread_id = 0
 
 
 
@@ -94,9 +78,8 @@ class PWork_test( unittest.TestCase ):
        work_pile_size = 800
        size = 4000000
 
-       data = numpy.array( size )
-       data.fill( 1.0 )
-
+       data = numpy.zeros( size )
+      
        work_pile = WorkPile( work_pile_size )
        mean_worker = MeanSummer( data )
 
