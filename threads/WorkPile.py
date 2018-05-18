@@ -44,7 +44,7 @@ class WorkPile:
       # Assure serial access here...
          with self.m_lock :
 
-            return self.m_pile.size();
+            return self.m_pile.size()
 
       ## end size #############################
 
@@ -60,8 +60,8 @@ class WorkPile:
 
             for i in range(0, len(self.m_pile)) :
 
-               self.m_pile[i] = start;
-               start.decrement();
+               self.m_pile[i] = start
+               start.decrement()
 
          ## end with scope
 
@@ -97,9 +97,9 @@ class WorkPile:
             if next(ans,None) is None :
                 return ans
 
-            next( self.m_current_work );
+            next( self.m_current_work )
 
-            return ans;
+            return ans
 
       ## end next ###############################
 

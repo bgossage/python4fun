@@ -19,7 +19,7 @@ class Work :
    ## The prefix decrement operator.
       def decrement ( self ) :
          if  self.m_chunk > 0  :
-            -- self.m_chunk
+            self.m_chunk = self.m_chunk - 1
             return self
 
    ## The less than operator.
