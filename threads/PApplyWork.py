@@ -1,7 +1,7 @@
 
 
-import WorkerThread
-import WorkPile
+from WorkerThread import WorkerThread
+from WorkPile import WorkPile
 
 
 """
@@ -24,15 +24,11 @@ def  ProcessWorkpile( worker, workPile, numProcs ) :
 ## If only one processor, execute the work on the parent thread...
    if numProcs == 1 :
 
-      work_itr = workPile.next()
+      for work in workPile :
 
-      while work_itr != workPile.end() :
+         worker( work,  0 )
 
-         worker( work_itr,  0 )
-
-         work_itr = workPile.next()
-
-      ## end while
+      ## end for
 
       return
   ## end if
