@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # -*- coding: utf-8 -*-
 """
 Created on Sun May 13 07:30:06 2018
@@ -13,10 +15,9 @@ import unittest
 import math
 import numpy
 
-import WorkPile
-import WorkThread
-import Work
-
+from WorkPile import WorkPile
+from Work import Work
+from PApplyWork import ProcessWorkpile
 
 ##
 ## A function object to compute a partial sum
@@ -28,8 +29,8 @@ class MeanWork( Work ):
 
       def __init__( self, chunks=1 ) :
          super().__init__(chunks)
-         m_partial_sum = 0.0
-         m_thread_id = 0
+         self.m_partial_sum = 0.0
+         self.m_thread_id = 0
 
 
 
@@ -73,13 +74,13 @@ class MeanSummer( Work ):
 
 class PWork_test( unittest.TestCase ):
 
-    def parallel_mean( self ) :
+    def test_parallel_mean( self ) :
 
        work_pile_size = 800
        size = 4000000
 
        data = numpy.zeros( size )
-      
+
        work_pile = WorkPile( work_pile_size )
        mean_worker = MeanSummer( data )
 
@@ -117,7 +118,9 @@ class PWork_test( unittest.TestCase ):
        ## end for
 
 
-    ## end parallel_mean ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ## end test_parallel_mean ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+if __name__ == '__main__':
+    unittest.main()
 
