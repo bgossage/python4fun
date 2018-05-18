@@ -2,7 +2,8 @@
 
 
 import threading
-import Work
+
+from Work import Work
 
 
 """
@@ -20,25 +21,19 @@ import Work
 
 class WorkPile:
 
-
-
    ## Default constructor
-      def __init__ ( self ):
+      def __init__ ( self, size ):
 
            self.m_lock = threading.Lock()
            self.m_pile = list()
            self.m_current_work = iter( self.m_pile )
 
-           self.reset()
+           if( size is None ) :
+              self.reset()
+           else:
+              self.resize( size )
 
       ## end constructor ###############
-
-   ## Construct a WorkPile of a given size.
-      def __init__ ( self, size ) :
-
-         self.resize( size )
-
-      ## end constructor #####################
 
       def size( self ):
       # Assure serial access here...
@@ -54,7 +49,7 @@ class WorkPile:
       ## Use a Guard to assure serial access here...
          with self.m_lock:
 
-            self.m_pile.resize( size )
+            self.m_pile = [None] * size
 
             start = Work( size )
 
@@ -85,6 +80,9 @@ class WorkPile:
           return iter( self.m_pile )
 
       ## end begin() ####################
+
+      def __iter__( self ):
+         return self    # because the object is both the iterable and the itorator
 
    ## Return the next chunk of work.
       def next( self ) :
