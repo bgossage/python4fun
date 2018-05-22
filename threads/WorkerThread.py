@@ -32,17 +32,11 @@ class WorkerThread( threading.Thread ):
    ## Process work from the workPile (overrides Thread.run() ).
       def run( self ):
 
-          ## Get the first available chunk of work...
-             work_itr = self.m_workPile.next()
-
           ## Process work until none remain...
-             while work_itr != self.m_workPile.end():
+             while (work_iter = next(self.m_workPile,None)) != None:
 
-             ## Have the object's member function do some work...
+             ## Have the worker do some work...
                 self.m_obj( work_itr, self.m_worker_id )
-
-             ## Get the next chunk of work...
-                work_itr = self.m_workPile.next()
 
              ## end while
       # end run
