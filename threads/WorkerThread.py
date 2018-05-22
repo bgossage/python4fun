@@ -23,7 +23,7 @@ class WorkerThread( threading.Thread ):
 
    ## Construct a WorkerThread.
       def __init__( self, obj, workPile, worker_id=0 ):
-        threading.Thread.__init__()
+        threading.Thread.__init__(self)
         self.m_obj = obj
         self.m_workPile = workPile
         self.m_worker_id = worker_id
