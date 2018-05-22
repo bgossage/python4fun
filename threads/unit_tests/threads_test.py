@@ -49,12 +49,15 @@ class MeanSummer( Work ):
          numchunks = work.nchunks()
 
          total_size = len( self.m_data )
-         length = total_size / numchunks
+         length = int(total_size / numchunks)
          start =  length * (work.chunk()-1)
          end = start + length-1
 
          if end >= len(self.m_data) :
             end = len( self.m_data) - 1
+
+         if work.chunk() == 0 :
+            start = 0
 
          for  i in range( start, end) :
 
@@ -107,7 +110,7 @@ class PWork_test( unittest.TestCase ):
           for work in work_pile :
 
              sum += work.partial_sum
-          print( "partial sum from: " << work.thread_id, "  " )
+          print( "partial sum from: ", work.thread_id, "  " )
           print( work.start, " - ", work.end )
 
           mean = sum / float(size)
