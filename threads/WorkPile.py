@@ -82,7 +82,7 @@ class WorkPile:
       ## end begin() ####################
 
       def __iter__( self ):
-         return self    # because the object is both the iterable and the itorator
+         return self.m_current_work    # because the object is both the iterable and the itorator
 
    ## Return the next chunk of work.
       def next( self ) :
@@ -108,17 +108,7 @@ class WorkPile:
 
             self.m_current_work = iter( self.m_pile )
 
-      ## end reset ///////////////////////////////////////
-
-   ### Return an iterator to indicate the end.
-      def end( self ):
-
-      ## Use a Guard to assure serial access here...
-         with self.m_lock :
-
-            return self.m_pile.end()
-
-      ## end end() #########################
+      ## end reset //////////////////////////////////////
 
 
 
