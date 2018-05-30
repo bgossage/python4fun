@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <cstdlib>
 
 using namespace std;
 using namespace chrono;
@@ -89,11 +90,11 @@ int main ( int argc, char* argv[] )
    
 ///////////////// Try to hand-optimize away the extra multiply ////////////////////////
    
-// "Optimal" nested loop...
+// Hand-optimized nested loop...
    size_t row = 0;
    for( size_t i=0; i<N; i++ )
    {
-      row = i * N;
+      row = i * N;   // row is constant within the inner loop.
       for( size_t j=0; j<N; j++ )
       {
          val = data ( row + j );  // Inner loop over rows (down the columns)
@@ -103,8 +104,10 @@ int main ( int argc, char* argv[] )
    stop = high_resolution_clock::now ();
    time_span = duration_cast<duration<double>>( stop - start );
 
-   std::cout << "Cache Optimal, non-coherent loop took " << time_span.count () << " seconds.";
+   std::cout << "Hand-optimized, non-coherent loop took " << time_span.count () << " seconds.";
    std::cout << std::endl;
+   
+   return EXIT_SUCCESS;
 
 }// end main ~~~~~~~~~~~~~~~~~~
 
