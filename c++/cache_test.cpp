@@ -3,6 +3,7 @@
 #include <vector>
 #include <chrono>
 #include <cstdlib>
+#include <algorithm>
 
 using namespace std;
 using namespace chrono;
@@ -14,6 +15,8 @@ class FloatArray
 {
    public:
       typedef float value_type;
+      typedef std::vector<value_type>::iterator iterator;
+      typedef std::vector<value_type>::const_iterator const_iterator;
 
    // Constructor
       FloatArray ( size_t rows, size_t cols )
@@ -35,6 +38,13 @@ class FloatArray
 
       }// end operator ( i,j ) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+      /// Return an iterator marking the first element
+         iterator begin() { return m_data.begin(); }
+         const_iterator begin() const { return m_data.begin(); }
+
+      /// Return an iterator marking the end of the sequence
+         iterator end() { return m_data.end(); }
+         const_iterator end() const { return m_data.end(); }
    private:
       size_t m_cols;
       size_t m_rows;
@@ -73,6 +83,9 @@ int main ( int argc, char* argv[] )
    std::cout << "Cache-Coherent loop took " << time_span.count () << " seconds.";
    std::cout << std::endl;
 
+// "Dirty" the cache...
+   std::fill( data.begin(), data.end(), 1.0f );
+
 /////////////////  The non-cache-coherent loop skips rows. /////////////////
    
    start = high_resolution_clock::now();
@@ -87,25 +100,7 @@ int main ( int argc, char* argv[] )
    
    std::cout << "Cache non-coherent loop took " << time_span.count () << " seconds.";
    std::cout << std::endl;
-   
-///////////////// Try to hand-optimize away the extra multiply ////////////////////////
-   
-// Hand-optimized nested loop...
-   size_t row = 0;
-   for( size_t i=0; i<N; i++ )
-   {
-      row = i * N;   // row is constant within the inner loop.
-      for( size_t j=0; j<N; j++ )
-      {
-         val = data ( row + j );  // Inner loop over rows (down the columns)
-         
-      }
-   }
-   stop = high_resolution_clock::now ();
-   time_span = duration_cast<duration<double>>( stop - start );
 
-   std::cout << "Hand-optimized, non-coherent loop took " << time_span.count () << " seconds.";
-   std::cout << std::endl;
    
    return EXIT_SUCCESS;
 
